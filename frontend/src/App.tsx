@@ -1,0 +1,28 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { Toaster } from '@/components/ui/toaster'
+import { Toaster as Sonner } from 'sonner'
+import Index from '@/pages/Index'
+import Results from '@/pages/Results'
+import NotFound from '@/pages/NotFound'
+
+const queryClient = new QueryClient()
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+          <Sonner />
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  )
+}
