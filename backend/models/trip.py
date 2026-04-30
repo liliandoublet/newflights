@@ -28,6 +28,8 @@ class TripFlight(BaseModel):
     departure_date: date
     from_airport: str
     to_airport: str
+    adults: int = 1
+    seat_type: str = "economy"
     result: list[dict] | None = Field(
         None, description="flight results from Google Flights", init=False
     )
@@ -40,6 +42,8 @@ class TripFlight(BaseModel):
             departure_date=formatted_date,
             from_airport=self.from_airport,
             to_airport=self.to_airport,
+            adults=self.adults,
+            seat_type=self.seat_type,
         )
 
     def __hash__(self):
@@ -60,6 +64,8 @@ class UserTrip(BaseModel):
     start_point: StartPoint
     points_of_interest: list[PointOfInterest]
     end_point: EndPoint
+    adults: int = 1
+    seat_type: str = "economy"
 
     @computed_field
     @cached_property
@@ -111,6 +117,8 @@ class UserTrip(BaseModel):
                         departure_date=possible_date,
                         from_airport=departure.name,
                         to_airport=arrival.name,
+                        adults=self.adults,
+                        seat_type=self.seat_type,
                     )
                 )
             trips.append(trip_flights)
